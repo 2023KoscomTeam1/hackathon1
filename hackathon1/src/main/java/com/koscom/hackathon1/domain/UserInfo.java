@@ -117,6 +117,7 @@ public class UserInfo implements UserDetails {
     public String toString() {
         return "UserInfo{" +
                 "userId='" + userId + '\'' +
+                ",userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", userPlace=" + userPlace +
                 ", userAssets=" + userAssets +
