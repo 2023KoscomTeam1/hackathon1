@@ -26,6 +26,8 @@ public class UserInfo implements UserDetails {
     @Field("user_assets")
     private List<HoldingAsset> userAssets;
     private int balance;
+    @Field("ipo_ids")
+    private List<Long> ipoIds;
     @Field("user_type")
     private UserType userType;
 
@@ -98,6 +100,14 @@ public class UserInfo implements UserDetails {
         this.balance = balance;
     }
 
+    public List<Long> getIpoIds() {
+        return ipoIds;
+    }
+
+    public void setIpoIds(List<Long> ipoIds) {
+        this.ipoIds = ipoIds;
+    }
+
     public UserType getUserType() {
         return userType;
     }
@@ -122,24 +132,9 @@ public class UserInfo implements UserDetails {
                 ", userPlace=" + userPlace +
                 ", userAssets=" + userAssets +
                 ", balance=" + balance +
+                ", ipoIds=" + ipoIds +
                 ", userType=" + userType +
                 '}';
-    }
-
-    public enum PlaceType {
-        SEOUL,
-        INCHEON,
-        DAEJEON,
-        DAEGU,
-        ULSAN,
-        PUSAN,
-        KWANGJU,
-        SEJONG,
-        KYUNGI,
-        CHOONGCHUNG,
-        JEONLA,
-        KYUNGSANG,
-        KANGWON
     }
 
     public enum UserType {
