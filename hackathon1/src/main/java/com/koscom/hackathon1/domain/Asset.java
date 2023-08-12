@@ -27,6 +27,8 @@ public class Asset {
     private long personalOwnCount;
     @Field("place_type")
     private PlaceType placeType;
+    @Field("view_count")
+    private Long viewCount;
 
     public String getName() {
         return name;
@@ -64,7 +66,7 @@ public class Asset {
         return currnetUnitPrice;
     }
 
-    public void setCurrnetCurrntPrice(int currnetUnitPrice) {
+    public void setCurrnetUnitPrice(int currnetUnitPrice) {
         this.currnetUnitPrice = currnetUnitPrice;
     }
 
@@ -108,6 +110,14 @@ public class Asset {
         this.placeType = placeType;
     }
 
+    public Long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
+
     @Override
     public String toString() {
         return "Assest{" +
@@ -121,6 +131,7 @@ public class Asset {
                 ", foreignOwnCount=" + foreignOwnCount +
                 ", personalOwnCount=" + personalOwnCount +
                 ", placeType=" + placeType +
+                ", viewCount=" + viewCount +
                 '}';
     }
 }

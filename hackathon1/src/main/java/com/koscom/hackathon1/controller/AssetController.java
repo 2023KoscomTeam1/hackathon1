@@ -1,14 +1,12 @@
 package com.koscom.hackathon1.controller;
 
 import com.koscom.hackathon1.domain.Asset;
-import com.koscom.hackathon1.domain.IPOAsset;
 import com.koscom.hackathon1.domain.PlaceType;
+import com.koscom.hackathon1.request.BuySellRequest;
 import com.koscom.hackathon1.service.AssetService;
 import com.koscom.hackathon1.service.IPOAssetService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,13 +19,23 @@ public class AssetController {
         this.assetService = assetService;
     }
 
-    @GetMapping
+    @GetMapping("/{assetId}")
+    public Asset getAsset(@PathVariable String assetId) {
+        return assetService.findBy(assetId);
+    }
+
+    @GetMapping("/list")
     public List<Asset> list() {
         return assetService.findAll();
     }
 
+    @GetMapping("/popular")
+    public List<Asset> popular() {
+        return assetService.findPopular();
+    }
+
     @GetMapping("/{place}")
     public List<Asset> favoriteList(@PathVariable("place") PlaceType placeType) {
-        return assetService.findByPlace(placeType);
+        return assetService.findBy(placeType);
     }
 }
