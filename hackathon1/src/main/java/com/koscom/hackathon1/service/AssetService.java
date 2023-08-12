@@ -22,8 +22,6 @@ public class AssetService {
     }
 
     public List<Asset> findByPlace(PlaceType placeType) {
-        return assetRepository.findAll().stream().filter((asset) -> {
-            return asset.getPlaceType() == placeType;
-        }).collect(Collectors.toList());
+        return assetRepository.findBy(placeType);
     }
 }

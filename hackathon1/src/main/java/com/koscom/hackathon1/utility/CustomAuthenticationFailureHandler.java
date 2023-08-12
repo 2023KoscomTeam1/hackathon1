@@ -1,4 +1,4 @@
-package com.koscom.hackathon1.login;
+package com.koscom.hackathon1.utility;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

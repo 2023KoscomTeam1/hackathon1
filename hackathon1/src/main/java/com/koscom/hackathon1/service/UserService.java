@@ -33,8 +33,8 @@ public class UserService {
 
     public List<IPOAsset> getIPOsBy(String userId) {
         List<Long> ipoIds = userRepository.findBy(userId).getIpoIds();
-        return ipoAssetRepository.findAll().stream().filter((ipoAsset -> ipoIds.contains(ipoAsset.getAssetId())))
-                .collect(Collectors.toList());
+
+        return ipoAssetRepository.findBy(ipoIds);
     }
 
     public void addBalance(String userId, int amount) {

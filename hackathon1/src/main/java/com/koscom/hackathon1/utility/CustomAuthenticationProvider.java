@@ -1,4 +1,4 @@
-package com.koscom.hackathon1.login;
+package com.koscom.hackathon1.utility;
 
 import com.koscom.hackathon1.domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;

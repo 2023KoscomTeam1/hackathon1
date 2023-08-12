@@ -23,16 +23,4 @@ public class IPOController {
     public List<IPOAsset> list() {
         return ipoAssetService.findAll();
     }
-
-    @GetMapping("/test")
-    public void test() {
-        IPOAsset ipoAsset = new IPOAsset();
-        ipoAsset.setName("WS 뮤지엄");
-        ipoAsset.setAddress("전라남도 담양군 담양읍 추성로");
-        ipoAsset.setTargetAmount(1000000);
-        ipoAsset.setCurrentAmount(100);
-        ipoAsset.setUnitPrice(1000);
-        ipoAsset.setDueDate(LocalDateTime.now());
-        ipoAssetService.save(ipoAsset);
-    }
 }
