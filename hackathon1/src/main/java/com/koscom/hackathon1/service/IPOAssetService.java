@@ -21,4 +21,8 @@ public class IPOAssetService {
     public List<IPOAsset> findAll() {
         return ipoAssetRepository.findAll();
     }
+
+    public IPOAsset findBy(Long ipoId) {
+        return ipoAssetRepository.findBy(ipoId);
+    }
 }
