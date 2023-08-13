@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class IPOAssetRepository {
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     public IPOAssetRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;

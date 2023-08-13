@@ -1,26 +1,25 @@
 package com.koscom.hackathon1.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.koscom.hackathon1.domain.Order;
 
-import java.util.List;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderResponse {
-    private List<Order> orders;
+    private Map<Long, Long> orderBook;
 
-    public List<Order> getOrders() {
-        return orders;
+    public Map<Long, Long> getOrderBook() {
+        return orderBook;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setOrderBook(Map<Long, Long> orderBook) {
+        this.orderBook = orderBook;
     }
 
     @Override
     public String toString() {
         return "OrderResponse{" +
-                "orders=" + orders +
+                "orderBook=" + orderBook +
                 '}';
     }
 }

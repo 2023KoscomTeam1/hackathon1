@@ -1,19 +1,11 @@
 package com.koscom.hackathon1.controller;
 
-import com.koscom.hackathon1.domain.Asset;
-import com.koscom.hackathon1.domain.HoldingAsset;
-import com.koscom.hackathon1.domain.IPOAsset;
-import com.koscom.hackathon1.domain.UserInfo;
 import com.koscom.hackathon1.response.UserResponse;
 import com.koscom.hackathon1.service.UserService;
-import org.apache.coyote.Response;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 
 @RestController

@@ -1,6 +1,5 @@
 package com.koscom.hackathon1.service;
 
-import com.koscom.hackathon1.domain.Asset;
 import com.koscom.hackathon1.domain.HoldingAsset;
 import com.koscom.hackathon1.domain.IPOAsset;
 import com.koscom.hackathon1.domain.UserInfo;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class UserService {

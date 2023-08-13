@@ -1,7 +1,6 @@
 package com.koscom.hackathon1.service;
 
 import com.koscom.hackathon1.domain.IPOAsset;
-import com.koscom.hackathon1.repository.AssetRepository;
 import com.koscom.hackathon1.repository.IPOAssetRepository;
 import org.springframework.stereotype.Component;
 

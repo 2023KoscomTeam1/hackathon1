@@ -1,6 +1,5 @@
 package com.koscom.hackathon1.controller;
 
-import com.koscom.hackathon1.domain.Asset;
 import com.koscom.hackathon1.domain.PlaceType;
 import com.koscom.hackathon1.request.BuySellRequest;
 import com.koscom.hackathon1.response.AssetsResponse;
@@ -8,8 +7,6 @@ import com.koscom.hackathon1.service.AssetService;
 import com.koscom.hackathon1.service.IPOAssetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/assets")
