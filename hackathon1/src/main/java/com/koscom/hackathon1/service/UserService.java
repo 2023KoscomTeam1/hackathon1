@@ -34,7 +34,6 @@ public class UserService {
     public List<IPOAsset> getIPOsBy(String userId) {
         List<Long> ipoIds = userRepository.findBy(userId).getIpoIds();
 
-        System.out.println(ipoIds);
         if (ipoIds == null || ipoIds.isEmpty()) {
             return new ArrayList<>();
         }

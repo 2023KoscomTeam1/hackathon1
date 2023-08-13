@@ -17,7 +17,7 @@ public class AssetRepository {
         this.mongoTemplate = mongoTemplate;
     }
 
-    public Asset findBy(String assetId) {
+    public Asset findBy(Long assetId) {
         Criteria criteria = Criteria.where("asset_id").is(assetId);
 
         return mongoTemplate.findOne(Query.query(criteria), Asset.class);

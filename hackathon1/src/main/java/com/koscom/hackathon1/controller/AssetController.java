@@ -21,7 +21,7 @@ public class AssetController {
     }
 
     @GetMapping("/{assetId}")
-    public AssetsResponse getAsset(@PathVariable String assetId) {
+    public AssetsResponse getAsset(@PathVariable Long assetId) {
         AssetsResponse assetsResponse = new AssetsResponse();
         assetsResponse.setAsset(assetService.findBy(assetId));
 
@@ -42,6 +42,15 @@ public class AssetController {
         assetsResponse.setAssets(assetService.findPopular());
 
         return assetsResponse;
+    }
+
+    @PostMapping("/{asset_id}/view")
+    public ResponseEntity<Object> view(@PathVariable Long assetId) {
+        if (!assetService.view(assetId)) {
+            ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{place}")

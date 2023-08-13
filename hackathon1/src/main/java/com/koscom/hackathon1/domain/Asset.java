@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Asset {
     @Id
     private ObjectId id;
+    @Field("asset_id")
+    private Long assetId;
     private String name;
     private String address;
     @Field("image_url")
@@ -29,6 +31,14 @@ public class Asset {
     private PlaceType placeType;
     @Field("view_count")
     private Long viewCount;
+
+    public Long getAssetId() {
+        return assetId;
+    }
+
+    public void setAssetId(Long assetId) {
+        this.assetId = assetId;
+    }
 
     public String getName() {
         return name;
@@ -122,6 +132,7 @@ public class Asset {
     public String toString() {
         return "Assest{" +
                 "name='" + name + '\'' +
+                ", assetId='" + assetId + '\'' +
                 ", address='" + address + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", wholePrice=" + wholePrice +

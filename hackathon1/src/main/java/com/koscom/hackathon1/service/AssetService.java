@@ -35,12 +35,24 @@ public class AssetService {
                 .collect(Collectors.toList());
     }
 
-    public Asset findBy(String assetId) {
+    public Asset findBy(Long assetId) {
         return assetRepository.findBy(assetId);
     }
 
     public List<Asset> findBy(PlaceType placeType) {
         return assetRepository.findBy(placeType);
+    }
+
+    public boolean view(Long assetId) {
+        Asset asset = assetRepository.findBy(assetId);
+        if (asset == null) {
+            return false;
+        }
+
+        asset.setViewCount(asset.getViewCount() + 1);
+
+        assetRepository.save(asset);
+        return true;
     }
 
     public void buy(Long assetId, Long price, Long count, String userId) {
