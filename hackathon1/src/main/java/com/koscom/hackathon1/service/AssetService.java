@@ -1,11 +1,10 @@
 package com.koscom.hackathon1.service;
 
-import com.koscom.hackathon1.domain.Asset;
-import com.koscom.hackathon1.domain.Order;
-import com.koscom.hackathon1.domain.OrderType;
-import com.koscom.hackathon1.domain.PlaceType;
+import com.koscom.hackathon1.domain.*;
+import com.koscom.hackathon1.exception.InvalidOrderException;
 import com.koscom.hackathon1.repository.AssetRepository;
 import com.koscom.hackathon1.repository.OrderRepository;
+import com.koscom.hackathon1.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -16,10 +15,12 @@ import java.util.stream.Collectors;
 public class AssetService {
     private final AssetRepository assetRepository;
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
-    public AssetService(AssetRepository assetRepository, OrderRepository orderRepository) {
+    public AssetService(AssetRepository assetRepository, OrderRepository orderRepository, UserRepository userRepository) {
         this.assetRepository = assetRepository;
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Asset> findAll() {
@@ -58,11 +59,20 @@ public class AssetService {
     public void buy(Long assetId, Long price, Long count, String userId) {
         Order newOrder = order(userId, assetId, OrderType.BUY, price, count);
 
-        orderRepository.save(newOrder);
+            orderRepository.save(newOrder);
     }
 
     public void sell(Long assetId, Long price, Long count, String userId) {
         Order newOrder = order(userId, assetId, OrderType.SELL, price, count);
+
+        List<Long> assetIds = userRepository.findBy(userId).getUserAssets()
+                .stream()
+                .map(HoldingAsset::getAssetId)
+                .toList();
+
+        if (!assetIds.contains(assetId)) {
+            throw new InvalidOrderException("Not allowed order");
+        }
 
         orderRepository.save(newOrder);
     }
