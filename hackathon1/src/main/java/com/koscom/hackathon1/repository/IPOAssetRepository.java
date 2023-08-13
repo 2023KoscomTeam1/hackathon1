@@ -13,7 +13,7 @@ import java.util.List;
 public class IPOAssetRepository {
     private final MongoTemplate mongoTemplate;
 
-    public IPOAssetRepository(MongoTemplate mongoTemplate) {
+    IPOAssetRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 

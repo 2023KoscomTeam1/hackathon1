@@ -17,7 +17,7 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Map<Long, Long> getOrderBook(Long assetId, OrderType orderType) {
+    public Map<Long, Long> getOrderBookBy(Long assetId, OrderType orderType) {
         List<Order> orders = getOrders(assetId, orderType);
         Map<Long, Long> orderBook = new HashMap<>();
 

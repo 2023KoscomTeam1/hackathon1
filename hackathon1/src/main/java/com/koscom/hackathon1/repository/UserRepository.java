@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserRepository {
     private final MongoTemplate mongoTemplate;
 
-    public UserRepository(MongoTemplate mongoTemplate) {
+    UserRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 

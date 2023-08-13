@@ -20,7 +20,7 @@ public class OrderController {
     @GetMapping("/{asset_id}/buy")
     public OrderResponse getBuyOrder(@PathVariable Long assetId) {
         OrderResponse orderResponse = new OrderResponse();
-        orderResponse.setOrderBook(orderService.getOrderBook(assetId, OrderType.BUY));
+        orderResponse.setOrderBook(orderService.getOrderBookBy(assetId, OrderType.BUY));
 
         return orderResponse;
     }
@@ -28,7 +28,7 @@ public class OrderController {
     @GetMapping("/{asset_id}/sell")
     public OrderResponse getSellOrder(@PathVariable Long assetId) {
         OrderResponse orderResponse = new OrderResponse();
-        orderResponse.setOrderBook(orderService.getOrderBook(assetId, OrderType.SELL));
+        orderResponse.setOrderBook(orderService.getOrderBookBy(assetId, OrderType.SELL));
 
         return orderResponse;
     }

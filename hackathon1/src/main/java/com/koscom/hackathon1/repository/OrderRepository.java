@@ -13,7 +13,7 @@ import java.util.List;
 public class OrderRepository {
     private final MongoTemplate mongoTemplate;
 
-    public OrderRepository(MongoTemplate mongoTemplate) {
+    OrderRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 
