@@ -19,10 +19,8 @@ public class UserResponse {
     @JsonProperty("user_assets")
     private List<HoldingAsset> userAssets;
     private Long balance;
-    @JsonProperty("ipo_ids")
-    private List<Long> ipoIds;
-    @JsonProperty("ipo_assets")
-    private List<IPOAsset> ipoAssets;
+    @JsonProperty("holding_ipos")
+    private List<HoldingIPO> holdingIPOs;
     @JsonProperty("user_type")
     private UserInfo.UserType userType;
 
@@ -66,20 +64,12 @@ public class UserResponse {
         this.balance = balance;
     }
 
-    public List<Long> getIpoIds() {
-        return ipoIds;
+    public List<HoldingIPO> getHoldingIPOs() {
+        return holdingIPOs;
     }
 
-    public void setIpoIds(List<Long> ipoIds) {
-        this.ipoIds = ipoIds;
-    }
-
-    public List<IPOAsset> getIpoAssets() {
-        return ipoAssets;
-    }
-
-    public void setIpoAssets(List<IPOAsset> ipoAssets) {
-        this.ipoAssets = ipoAssets;
+    public void setHoldingIPOs(List<HoldingIPO> holdingIPOs) {
+        this.holdingIPOs = holdingIPOs;
     }
 
     public UserInfo.UserType getUserType() {
@@ -99,7 +89,7 @@ public class UserResponse {
         userResponse.setUserId(userInfo.getUserId());
         userResponse.setBalance(userInfo.getBalance());
         userResponse.setUserType(userInfo.getUserType());
-        userResponse.setIpoIds(userInfo.getIpoIds());
+        userResponse.setHoldingIPOs(userInfo.getHoldingIPOs());
 
         return userResponse;
     }
@@ -112,7 +102,7 @@ public class UserResponse {
                 ", placeType=" + placeType +
                 ", userAssets=" + userAssets +
                 ", balance=" + balance +
-                ", ipoIds=" + ipoIds +
+                ", holdingIPOs=" + holdingIPOs +
                 ", userType=" + userType +
                 '}';
     }

@@ -1,14 +1,13 @@
 package com.koscom.hackathon1.service;
 
 import com.koscom.hackathon1.domain.HoldingAsset;
-import com.koscom.hackathon1.domain.IPOAsset;
+import com.koscom.hackathon1.domain.HoldingIPO;
 import com.koscom.hackathon1.domain.UserInfo;
 import com.koscom.hackathon1.exception.InsufficientBalanceException;
 import com.koscom.hackathon1.repository.IPOAssetRepository;
 import com.koscom.hackathon1.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -29,14 +28,8 @@ public class UserService {
         return userRepository.findBy(userId).getUserAssets();
     }
 
-    public List<IPOAsset> getIPOsBy(String userId) {
-        List<Long> ipoIds = userRepository.findBy(userId).getIpoIds();
-
-        if (ipoIds == null || ipoIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        return ipoAssetRepository.findBy(ipoIds);
+    public List<HoldingIPO> getHoldingIPOsBy(String userId) {
+        return userRepository.findBy(userId).getHoldingIPOs();
     }
 
     public void addBalance(String userId, Long amount) {

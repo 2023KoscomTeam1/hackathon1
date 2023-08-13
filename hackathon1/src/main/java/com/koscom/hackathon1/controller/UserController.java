@@ -47,9 +47,11 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/ipos")
-    public UserResponse getIPOAssets(@PathVariable String userId) {
+    public UserResponse getHoldingIPOs(@PathVariable String userId) {
         UserResponse userResponse = new UserResponse();
-        userResponse.setIpoAssets(userService.getIPOsBy(userId));
+        System.out.println(userService.getHoldingIPOsBy(userId));
+        System.out.println(userService.getUser(userId));
+        userResponse.setHoldingIPOs(userService.getHoldingIPOsBy(userId));
 
         return userResponse;
     }
