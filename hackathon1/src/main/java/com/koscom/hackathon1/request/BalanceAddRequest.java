@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BalanceAddRequest {
     @JsonProperty("user_id")
     private String userId;
-    private int amount;
+    private Long amount;
 
     public String getUserId() {
         return userId;
@@ -15,11 +15,11 @@ public class BalanceAddRequest {
         this.userId = userId;
     }
 
-    public int getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 

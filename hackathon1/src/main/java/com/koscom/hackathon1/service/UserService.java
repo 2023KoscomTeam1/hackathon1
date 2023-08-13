@@ -42,18 +42,18 @@ public class UserService {
         return ipoAssetRepository.findBy(ipoIds);
     }
 
-    public void addBalance(String userId, int amount) {
+    public void addBalance(String userId, Long amount) {
         UserInfo userInfo = userRepository.findBy(userId);
-        int preBalance = userInfo.getBalance();
+        Long preBalance = userInfo.getBalance();
 
         userInfo.setBalance(preBalance + amount);
 
         userRepository.save(userInfo);
     }
 
-    public void minusBalance(String userId, int amount) {
+    public void minusBalance(String userId, Long amount) {
         UserInfo userInfo = userRepository.findBy(userId);
-        int preBalance = userInfo.getBalance();
+        Long preBalance = userInfo.getBalance();
 
         if (preBalance < amount) {
             throw new InsufficientBalanceException("Insufficient balance. " + "userId: " + userId + " Current: " + preBalance);

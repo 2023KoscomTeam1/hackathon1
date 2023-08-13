@@ -25,7 +25,7 @@ public class UserInfo implements UserDetails {
     private PlaceType userPlace;
     @Field("user_assets")
     private List<HoldingAsset> userAssets;
-    private int balance;
+    private Long balance;
     @Field("ipo_ids")
     private List<Long> ipoIds;
     @Field("user_type")
@@ -92,11 +92,11 @@ public class UserInfo implements UserDetails {
         this.userAssets = userAssets;
     }
 
-    public int getBalance() {
+    public Long getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

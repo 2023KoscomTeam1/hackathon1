@@ -4,6 +4,7 @@ import com.koscom.hackathon1.domain.Asset;
 import com.koscom.hackathon1.domain.HoldingAsset;
 import com.koscom.hackathon1.domain.IPOAsset;
 import com.koscom.hackathon1.domain.UserInfo;
+import com.koscom.hackathon1.response.UserResponse;
 import com.koscom.hackathon1.service.UserService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
@@ -25,22 +26,31 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUser(@PathVariable String userId) {
-        return ResponseEntity.ok(userService.getUser(userId));
+    public UserResponse getUser(@PathVariable String userId) {
+        return UserResponse.from(userService.getUser(userId));
     }
 
     @GetMapping("/{userId}/place")
-    public ResponseEntity<String> getUserPlace(@PathVariable String userId) {
-        return ResponseEntity.ok(userService.getUser(userId).getUserPlace().toString());
+    public UserResponse getUserPlace(@PathVariable String userId) {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setPlaceType(userService.getUser(userId).getUserPlace());
+
+        return userResponse;
     }
 
     @GetMapping("/{userId}/assets")
-    public List<HoldingAsset> getAssets(@PathVariable String userId) {
-        return userService.getAssetsBy(userId);
+    public UserResponse getAssets(@PathVariable String userId) {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUserAssets(userService.getAssetsBy(userId));
+
+        return userResponse;
     }
 
     @GetMapping("/{userId}/ipos")
-    public List<IPOAsset> getIPOAssets(@PathVariable String userId) {
-        return userService.getIPOsBy(userId);
+    public UserResponse getIPOAssets(@PathVariable String userId) {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setIpoAssets(userService.getIPOsBy(userId));
+
+        return userResponse;
     }
 }
