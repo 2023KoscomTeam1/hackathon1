@@ -2,10 +2,11 @@ package com.koscom.hackathon1.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document
 public class HoldingIPO {
-    @JsonProperty("ipo_id")
+    @Field("ipo_id")
     private Long ipoId;
     private Long count;
 

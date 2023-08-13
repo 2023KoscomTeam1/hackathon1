@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public List<HoldingIPO> getHoldingIPOsBy(String userId) {
-        return userRepository.findBy(userId).getHoldingIPOs();
+        return userRepository.findBy(userId).getUserIPOs();
     }
 
     public void addBalance(String userId, Long amount) {

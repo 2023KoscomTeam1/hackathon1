@@ -27,7 +27,7 @@ public class UserInfo implements UserDetails {
     private List<HoldingAsset> userAssets;
     private Long balance;
     @Field("user_ipos")
-    private List<HoldingIPO> holdingIPOs;
+    private List<HoldingIPO> userIPOs;
     @Field("user_type")
     private UserType userType;
 
@@ -100,12 +100,12 @@ public class UserInfo implements UserDetails {
         this.balance = balance;
     }
 
-    public List<HoldingIPO> getHoldingIPOs() {
-        return holdingIPOs;
+    public List<HoldingIPO> getUserIPOs() {
+        return userIPOs;
     }
 
-    public void setHoldingIPOs(List<HoldingIPO> holdingIPOs) {
-        this.holdingIPOs = holdingIPOs;
+    public void setUserIPOs(List<HoldingIPO> userIPOs) {
+        this.userIPOs = userIPOs;
     }
 
     public UserType getUserType() {
@@ -132,7 +132,7 @@ public class UserInfo implements UserDetails {
                 ", userPlace=" + userPlace +
                 ", userAssets=" + userAssets +
                 ", balance=" + balance +
-                ", holdingIPOs=" + holdingIPOs +
+                ", userIPOs=" + userIPOs +
                 ", userType=" + userType +
                 '}';
     }

@@ -50,7 +50,7 @@ public class AssetController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{place}")
+    @GetMapping("/place/{place}")
     public AssetsResponse favoriteList(@PathVariable("place") PlaceType placeType) {
         AssetsResponse assetsResponse = new AssetsResponse();
         assetsResponse.setAssets(assetService.findBy(placeType));
