@@ -15,13 +15,6 @@ public class BalanceController {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Long> getBalance(@PathVariable String userId) {
-        Long balance = userService.getUser(userId).getBalance();
-
-        return ResponseEntity.ok(balance);
-    }
-
     @PostMapping("/add")
     public ResponseEntity<Object> add(@RequestBody BalanceAddRequest request) {
         userService.addBalance(request.getUserId(), request.getAmount());

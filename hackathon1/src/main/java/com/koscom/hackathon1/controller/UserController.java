@@ -46,6 +46,14 @@ public class UserController {
         return userResponse;
     }
 
+    @GetMapping("/{userId}/balance")
+    public UserResponse getBalance(@PathVariable String userId) {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setBalance(userService.getUser(userId).getBalance());
+
+        return userResponse;
+    }
+
     @GetMapping("/{userId}/ipos")
     public UserResponse getIPOAssets(@PathVariable String userId) {
         UserResponse userResponse = new UserResponse();

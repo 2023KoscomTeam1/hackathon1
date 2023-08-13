@@ -1,6 +1,7 @@
 package com.koscom.hackathon1.controller;
 
 import com.koscom.hackathon1.domain.IPOAsset;
+import com.koscom.hackathon1.response.IPOResponse;
 import com.koscom.hackathon1.service.IPOAssetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,10 @@ public class IPOController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<IPOAsset>> list() {
-        return ResponseEntity.ok(ipoAssetService.findAll());
+    public IPOResponse list() {
+        IPOResponse ipoResponse = new IPOResponse();
+        ipoResponse.setIpoAssets(ipoAssetService.findAll());
+
+        return ipoResponse;
     }
 }

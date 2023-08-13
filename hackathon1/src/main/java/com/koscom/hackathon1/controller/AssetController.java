@@ -3,6 +3,7 @@ package com.koscom.hackathon1.controller;
 import com.koscom.hackathon1.domain.Asset;
 import com.koscom.hackathon1.domain.PlaceType;
 import com.koscom.hackathon1.request.BuySellRequest;
+import com.koscom.hackathon1.response.AssetsResponse;
 import com.koscom.hackathon1.service.AssetService;
 import com.koscom.hackathon1.service.IPOAssetService;
 import org.springframework.http.ResponseEntity;
@@ -20,28 +21,47 @@ public class AssetController {
     }
 
     @GetMapping("/{assetId}")
-    public ResponseEntity<Asset> getAsset(@PathVariable String assetId) {
-        return ResponseEntity.ok(assetService.findBy(assetId));
+    public AssetsResponse getAsset(@PathVariable String assetId) {
+        AssetsResponse assetsResponse = new AssetsResponse();
+        assetsResponse.setAsset(assetService.findBy(assetId));
+
+        return assetsResponse;
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<Asset>> list() {
-        return ResponseEntity.ok(assetService.findAll());
+    public AssetsResponse list() {
+        AssetsResponse assetsResponse = new AssetsResponse();
+        assetsResponse.setAssets(assetService.findAll());
+
+        return assetsResponse;
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<List<Asset>> popular() {
-        return ResponseEntity.ok(assetService.findPopular());
+    public AssetsResponse popular() {
+        AssetsResponse assetsResponse = new AssetsResponse();
+        assetsResponse.setAssets(assetService.findPopular());
+
+        return assetsResponse;
     }
 
     @GetMapping("/{place}")
-    public ResponseEntity<List<Asset>> favoriteList(@PathVariable("place") PlaceType placeType) {
-        return ResponseEntity.ok(assetService.findBy(placeType));
+    public AssetsResponse favoriteList(@PathVariable("place") PlaceType placeType) {
+        AssetsResponse assetsResponse = new AssetsResponse();
+        assetsResponse.setAssets(assetService.findBy(placeType));
+
+        return assetsResponse;
+    }
+
+    @PostMapping("/buy")
+    public ResponseEntity<Object> buy(@RequestBody BuySellRequest request) {
+        assetService.buy(request.getAssetId(), request.getPrice(), request.getCount(), request.getUserId());
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/sell")
     public ResponseEntity<Object> sell(@RequestBody BuySellRequest request) {
-        assetService.sell(request.getAssetId(), request.getPrice(), request.getPrice(), request.getUserId());
+        assetService.sell(request.getAssetId(), request.getPrice(), request.getCount(), request.getUserId());
 
         return ResponseEntity.ok().build();
     }
