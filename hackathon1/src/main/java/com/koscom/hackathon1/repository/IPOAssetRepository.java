@@ -26,7 +26,7 @@ public class IPOAssetRepository {
     }
 
     public List<IPOAsset> findBy(List<Long> ipoIds) {
-        Criteria criteria = Criteria.where("asset_id").in(ipoIds);
+        Criteria criteria = Criteria.where("ipo_id").in(ipoIds);
 
         return mongoTemplate.find(Query.query(criteria), IPOAsset.class);
     }

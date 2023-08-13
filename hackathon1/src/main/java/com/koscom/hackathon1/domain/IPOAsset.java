@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 public class IPOAsset {
     @Id
     private ObjectId id;
-    @Field("asset_id")
-    private long assetId;
+    @Field("ipo_id")
+    private long ipoId;
     private String name;
     private String address;
     @Field("target_amount")
@@ -32,12 +32,12 @@ public class IPOAsset {
         this.id = id;
     }
 
-    public long getAssetId() {
-        return assetId;
+    public long getIpoId() {
+        return ipoId;
     }
 
-    public void setAssetId(long assetId) {
-        this.assetId = assetId;
+    public void setIpoId(Long ipoId) {
+        this.ipoId = ipoId;
     }
 
     public String getName() {
@@ -92,7 +92,7 @@ public class IPOAsset {
     public String toString() {
         return "IPOAsset{" +
                 "id=" + id +
-                ", assetId='" + assetId + '\'' +
+                ", ipoId='" + ipoId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", targetAmount=" + targetAmount +
