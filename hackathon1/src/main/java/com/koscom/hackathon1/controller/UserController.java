@@ -3,7 +3,9 @@ package com.koscom.hackathon1.controller;
 import com.koscom.hackathon1.domain.Asset;
 import com.koscom.hackathon1.domain.HoldingAsset;
 import com.koscom.hackathon1.domain.IPOAsset;
+import com.koscom.hackathon1.domain.UserInfo;
 import com.koscom.hackathon1.service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/place")
-    public String getUserPlace(@PathVariable String userId) {
-        return userService.getUser(userId).getUserPlace().toString();
+    public ResponseEntity<String> getUserPlace(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.getUser(userId).getUserPlace().toString());
     }
 
     @GetMapping("/{userId}/assets")

@@ -15,7 +15,7 @@ import java.util.List;
 public class IPOController {
     private final IPOAssetService ipoAssetService;
 
-    public IPOController(IPOAssetService ipoAssetService) {
+    IPOController(IPOAssetService ipoAssetService) {
         this.ipoAssetService = ipoAssetService;
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class AssetController {
     private final AssetService assetService;
 
-    public AssetController(AssetService assetService, IPOAssetService ipoAssetService) {
+    AssetController(AssetService assetService, IPOAssetService ipoAssetService) {
         this.assetService = assetService;
     }
 
@@ -38,4 +38,11 @@ public class AssetController {
     public List<Asset> favoriteList(@PathVariable("place") PlaceType placeType) {
         return assetService.findBy(placeType);
     }
+/*
+    @PostMapping("/sell")
+    public ResponseEntity<Object> sell(@RequestBody BuySellRequest request) {
+        assetService.sell()
+    }
+
+ */
 }
