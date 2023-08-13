@@ -16,8 +16,8 @@ public class BalanceController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getBalance(@PathVariable String userId) {
-        int balance = userService.getUser(userId).getBalance();
+    public ResponseEntity<Long> getBalance(@PathVariable String userId) {
+        Long balance = userService.getUser(userId).getBalance();
 
         return ResponseEntity.ok(balance);
     }

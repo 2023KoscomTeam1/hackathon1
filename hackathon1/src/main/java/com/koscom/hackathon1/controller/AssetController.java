@@ -20,29 +20,29 @@ public class AssetController {
     }
 
     @GetMapping("/{assetId}")
-    public Asset getAsset(@PathVariable String assetId) {
-        return assetService.findBy(assetId);
+    public ResponseEntity<Asset> getAsset(@PathVariable String assetId) {
+        return ResponseEntity.ok(assetService.findBy(assetId));
     }
 
     @GetMapping("/list")
-    public List<Asset> list() {
-        return assetService.findAll();
+    public ResponseEntity<List<Asset>> list() {
+        return ResponseEntity.ok(assetService.findAll());
     }
 
     @GetMapping("/popular")
-    public List<Asset> popular() {
-        return assetService.findPopular();
+    public ResponseEntity<List<Asset>> popular() {
+        return ResponseEntity.ok(assetService.findPopular());
     }
 
     @GetMapping("/{place}")
-    public List<Asset> favoriteList(@PathVariable("place") PlaceType placeType) {
-        return assetService.findBy(placeType);
-    }
-/*
-    @PostMapping("/sell")
-    public ResponseEntity<Object> sell(@RequestBody BuySellRequest request) {
-        assetService.sell()
+    public ResponseEntity<List<Asset>> favoriteList(@PathVariable("place") PlaceType placeType) {
+        return ResponseEntity.ok(assetService.findBy(placeType));
     }
 
- */
+    @PostMapping("/sell")
+    public ResponseEntity<Object> sell(@RequestBody BuySellRequest request) {
+        assetService.sell(request.getAssetId(), request.getPrice(), request.getPrice(), request.getUserId());
+
+        return ResponseEntity.ok().build();
+    }
 }
