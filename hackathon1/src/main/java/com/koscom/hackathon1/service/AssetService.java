@@ -28,7 +28,7 @@ public class AssetService {
 
     public List<Asset> findPopular() {
         Comparator<Asset> compare = Comparator
-                .comparing(Asset::getViewCount);
+                .comparing(asset -> -asset.getViewCount());
 
         return assetRepository.findAll().stream()
                 .sorted(compare)
