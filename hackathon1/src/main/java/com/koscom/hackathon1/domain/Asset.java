@@ -18,7 +18,7 @@ public class Asset {
     @Field("whole_price")
     private long wholePrice;
     @Field("current_unit_price")
-    private long currnetUnitPrice;
+    private long currentUnitPrice;
     @Field("end_price")
     private long endPrice;
     @Field("company_own_count")
@@ -72,12 +72,12 @@ public class Asset {
         this.wholePrice = wholePrice;
     }
 
-    public long getCurrnetUnitPrice() {
-        return currnetUnitPrice;
+    public long getCurrentUnitPrice() {
+        return currentUnitPrice;
     }
 
-    public void setCurrnetUnitPrice(int currnetUnitPrice) {
-        this.currnetUnitPrice = currnetUnitPrice;
+    public void setCurrentUnitPrice(int currentUnitPrice) {
+        this.currentUnitPrice = currentUnitPrice;
     }
 
     public long getEndPrice() {
@@ -136,7 +136,7 @@ public class Asset {
                 ", address='" + address + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", wholePrice=" + wholePrice +
-                ", currnetUnitPrice=" + currnetUnitPrice +
+                ", currentUnitPrice=" + currentUnitPrice +
                 ", endPrice=" + endPrice +
                 ", companyOwnCount=" + companyOwnCount +
                 ", foreignOwnCount=" + foreignOwnCount +
