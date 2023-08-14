@@ -20,7 +20,7 @@ public class Asset {
     @Field("current_unit_price")
     private long currentUnitPrice;
     @Field("end_price")
-    private long endPrice;
+    private Long endPrice;
     @Field("company_own_count")
     private long companyOwnCount;
     @Field("foreign_own_count")
@@ -80,11 +80,11 @@ public class Asset {
         this.currentUnitPrice = currentUnitPrice;
     }
 
-    public long getEndPrice() {
+    public Long getEndPrice() {
         return endPrice;
     }
 
-    public void setEndPrice(int endPrice) {
+    public void setEndPrice(Long endPrice) {
         this.endPrice = endPrice;
     }
 

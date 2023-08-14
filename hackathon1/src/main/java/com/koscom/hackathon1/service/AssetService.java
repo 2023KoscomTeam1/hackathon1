@@ -57,25 +57,21 @@ public class AssetService {
         return true;
     }
 
-    public void buy(Long assetId, Long price, Long count, String userId) {
+     public void buy(Long assetId, Long price, Long count, String userId) {
         Order newOrder = order(userId, assetId, OrderType.BUY, price, count);
-        UserInfo userInfo = userRepository.findBy(userId);
-
-        if (price * count > userInfo.getBalance()) {
+        Long userBalance = userRepository.findBy(userId).getBalance();
+        if (price * count > userBalance) {
             throw new InsufficientBalanceException("Insufficient Balance Exception");
         }
-
-        userInfo.setBalance(userInfo.getBalance() - (price * count));
 
         Long leftCount = matchOrder(newOrder);
         newOrder.setCount(leftCount);
 
-        if (!count.equals(leftCount)) {
-            userInfo.getUserAssets();
-        }
-        userRepository.save(userInfo);
+        modifyBalance(userId, userBalance - (price * count));
 
-        orderRepository.save(newOrder);
+        if (leftCount > 0) {
+            orderRepository.save(newOrder);
+        }
     }
 
     public void sell(Long assetId, Long price, Long count, String userId) {
@@ -90,27 +86,104 @@ public class AssetService {
             throw new InvalidOrderException("Not allowed order");
         }
 
-        orderRepository.save(newOrder);
+        Long leftCount = matchOrder(newOrder);
+        newOrder.setCount(leftCount);
+
+        if (leftCount > 0) {
+            orderRepository.save(newOrder);
+        }
     }
 
     private Long matchOrder(Order order) {
         if (order.getOrderType() == OrderType.BUY) {
-            List<Order> orders = orderRepository.findBy(order.getAssetId(), OrderType.SELL, order.getPrice());
-            orders.forEach(buyOrder -> {
-                if (buyOrder.getUserId().equals(order.getUserId())) {
-                    return;
-                }
-                Long preCount = buyOrder.getCount();
-                Long currentCount = order.getCount();
-
-                if (preCount < currentCount) {
-                    order.setCount(currentCount - preCount);
-                    orderRepository.deleteBy(buyOrder);
-                }
-            });
+            return matchOrder(order, OrderType.SELL);
         }
 
+        return matchOrder(order, OrderType.BUY);
+    }
+
+    private Long matchOrder(Order order, OrderType countOrderType) {
+        List<Order> countOrders = orderRepository.findBy(order.getAssetId(), countOrderType, order.getPrice());
+        countOrders.forEach(countOrder -> {
+            Long countOrderCount = countOrder.getCount();
+            Long currentCount = order.getCount();
+
+            if (countOrder.getUserId().equals(order.getUserId())) {
+                return;
+            }
+
+            if (currentCount <= 0) {
+                return;
+            }
+
+            modifyAssetEndPrice(order.getAssetId(), order.getPrice());
+
+            if (countOrderCount <= currentCount) {
+                modifyUserAsset(countOrder.getUserId(), countOrder.getAssetId(), countOrderCount, countOrder.getPrice(), countOrder.getOrderType());
+                modifyUserAsset(order.getUserId(), order.getAssetId(), countOrderCount, countOrder.getPrice(), order.getOrderType());
+
+                order.setCount(currentCount - countOrderCount);
+                orderRepository.deleteBy(countOrder);
+                return;
+            }
+
+            modifyUserAsset(countOrder.getUserId(), countOrder.getAssetId(), order.getCount(), countOrder.getPrice(), countOrder.getOrderType());
+            modifyUserAsset(order.getUserId(), order.getAssetId(), order.getCount(), order.getPrice(), order.getOrderType());
+
+            countOrder.setCount(countOrderCount - currentCount);
+            orderRepository.save(countOrder);
+
+            order.setCount(0L);
+        });
+
         return order.getCount();
+    }
+
+    private void modifyAssetEndPrice(Long assetId, Long endPrice) {
+        Asset asset = assetRepository.findBy(assetId);
+        asset.setEndPrice(endPrice);
+        assetRepository.save(asset);
+    }
+
+    private void modifyUserAsset(String userId, Long assetId, Long count, Long price, OrderType orderType) {
+        UserInfo userInfo = userRepository.findBy(userId);
+        List<HoldingAsset> assets = userInfo.getUserAssets();
+        List<Long> assetIds = assets.stream().mapToLong(HoldingAsset::getAssetId).boxed().toList();;
+        if (assetIds.contains(assetId)) {
+            assets.forEach(asset -> {
+                if (asset.getAssetId().equals(assetId)) {
+                    if (orderType.equals(OrderType.SELL)) {
+                        asset.setCount(asset.getCount() - count);
+                    } else {
+                        Double averagePrice = (asset.getAveragePrice()*asset.getCount() + price*count)/(asset.getCount() + count);
+                        asset.setAveragePrice(averagePrice);
+                        asset.setCount(asset.getCount() + count);
+                    }
+                }
+            });
+        } else {
+            HoldingAsset holdingAsset = new HoldingAsset();
+
+            holdingAsset.setCount(count);
+            holdingAsset.setAssetId(assetId);
+            holdingAsset.setAveragePrice(price.doubleValue());
+
+            assets.add(holdingAsset);
+        }
+
+        if (orderType.equals(OrderType.SELL)) {
+            userInfo.setBalance(userInfo.getBalance() + (count * price));
+        }
+
+        userInfo.setUserAssets(assets);
+
+        userRepository.save(userInfo);
+    }
+
+    private void modifyBalance(String userId, Long balance) {
+        UserInfo userInfo = userRepository.findBy(userId);
+        userInfo.setBalance(balance);
+        userRepository.save(userInfo);
     }
 
     private Order order(String userId, Long assetId, OrderType orderType, Long price, Long count) {
