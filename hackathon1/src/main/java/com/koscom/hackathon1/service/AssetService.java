@@ -1,6 +1,7 @@
 package com.koscom.hackathon1.service;
 
 import com.koscom.hackathon1.domain.*;
+import com.koscom.hackathon1.exception.InsufficientBalanceException;
 import com.koscom.hackathon1.exception.InvalidOrderException;
 import com.koscom.hackathon1.repository.AssetRepository;
 import com.koscom.hackathon1.repository.OrderRepository;
@@ -58,8 +59,23 @@ public class AssetService {
 
     public void buy(Long assetId, Long price, Long count, String userId) {
         Order newOrder = order(userId, assetId, OrderType.BUY, price, count);
+        UserInfo userInfo = userRepository.findBy(userId);
 
-            orderRepository.save(newOrder);
+        if (price * count > userInfo.getBalance()) {
+            throw new InsufficientBalanceException("Insufficient Balance Exception");
+        }
+
+        userInfo.setBalance(userInfo.getBalance() - (price * count));
+
+        Long leftCount = matchOrder(newOrder);
+        newOrder.setCount(leftCount);
+
+        if (!count.equals(leftCount)) {
+            userInfo.getUserAssets();
+        }
+        userRepository.save(userInfo);
+
+        orderRepository.save(newOrder);
     }
 
     public void sell(Long assetId, Long price, Long count, String userId) {
@@ -75,6 +91,26 @@ public class AssetService {
         }
 
         orderRepository.save(newOrder);
+    }
+
+    private Long matchOrder(Order order) {
+        if (order.getOrderType() == OrderType.BUY) {
+            List<Order> orders = orderRepository.findBy(order.getAssetId(), OrderType.SELL, order.getPrice());
+            orders.forEach(buyOrder -> {
+                if (buyOrder.getUserId().equals(order.getUserId())) {
+                    return;
+                }
+                Long preCount = buyOrder.getCount();
+                Long currentCount = order.getCount();
+
+                if (preCount < currentCount) {
+                    order.setCount(currentCount - preCount);
+                    orderRepository.deleteBy(buyOrder);
+                }
+            });
+        }
+
+        return order.getCount();
     }
 
     private Order order(String userId, Long assetId, OrderType orderType, Long price, Long count) {

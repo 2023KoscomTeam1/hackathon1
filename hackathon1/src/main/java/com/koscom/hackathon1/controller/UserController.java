@@ -1,11 +1,16 @@
 package com.koscom.hackathon1.controller;
 
+import com.koscom.hackathon1.domain.Asset;
+import com.koscom.hackathon1.domain.HoldingAsset;
 import com.koscom.hackathon1.response.UserResponse;
 import com.koscom.hackathon1.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -34,6 +39,17 @@ public class UserController {
     public UserResponse getAssets(@PathVariable String userId) {
         UserResponse userResponse = new UserResponse();
         userResponse.setUserAssets(userService.getAssetsBy(userId));
+
+        return userResponse;
+    }
+
+    @GetMapping("/{userId}/assets/{assetId}")
+    public UserResponse getAsset(@PathVariable("userId") String userId, @PathVariable Long assetId) {
+        UserResponse userResponse = new UserResponse();
+        List<HoldingAsset> userAsset = userService.getAssetsBy(userId).stream()
+                .filter(asset -> asset.getAssetId().equals(assetId))
+                .toList();
+        userResponse.setUserAssets(userAsset);
 
         return userResponse;
     }
