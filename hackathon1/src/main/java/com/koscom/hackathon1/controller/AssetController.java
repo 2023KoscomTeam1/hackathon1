@@ -41,7 +41,7 @@ public class AssetController {
         return assetsResponse;
     }
 
-    @PostMapping("/{asset_id}/view")
+    @PostMapping("/{assetId}/view")
     public ResponseEntity<Object> view(@PathVariable Long assetId) {
         if (!assetService.view(assetId)) {
             ResponseEntity.badRequest().build();
